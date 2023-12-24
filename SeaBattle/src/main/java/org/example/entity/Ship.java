@@ -3,9 +3,10 @@ package org.example.entity;
 import org.example.utils.Config;
 import org.example.utils.Point;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
 
 public class Ship implements Immovable {
     private final PointBlock[] BLOCKS;
@@ -32,7 +33,7 @@ public class Ship implements Immovable {
 
     @Override
     public boolean hasCord(Point point) {
-        return Arrays.stream(BLOCKS).anyMatch(pointBlock -> pointBlock.COORDINATE.equals(point));
+        return Arrays.stream(BLOCKS).anyMatch(pointBlock -> pointBlock.coordinate.equals(point));
     }
 
     @Override
@@ -43,10 +44,10 @@ public class Ship implements Immovable {
     @Override
     public Point[] getCordsAround() {
         ArrayList<Point> points = new ArrayList<>();
-        int minX = BLOCKS[0].COORDINATE.X - 1;
-        int minY = BLOCKS[0].COORDINATE.Y - 1;
-        int maxX = BLOCKS[BLOCKS.length - 1].COORDINATE.X + 1;
-        int maxY = BLOCKS[BLOCKS.length - 1].COORDINATE.Y + 1;
+        int minX = BLOCKS[0].coordinate.X - 1;
+        int minY = BLOCKS[0].coordinate.Y - 1;
+        int maxX = BLOCKS[BLOCKS.length - 1].coordinate.X + 1;
+        int maxY = BLOCKS[BLOCKS.length - 1].coordinate.Y + 1;
 
         for (int xInd = minX; xInd < maxX; xInd++) {
             if (xInd >= Config.MIN_CORD && xInd <= Config.MAX_CORD) {

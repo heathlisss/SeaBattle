@@ -1,16 +1,20 @@
 package org.example.entity;
 
+import org.example.utils.Config;
 import org.example.utils.Point;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class PointBlock {
-    public final Point COORDINATE;
+    public final Point coordinate;
+    public final Rectangle2D rectangle;
     private boolean isOpened;
     private Immovable host;
 
-    public PointBlock(Point coordinate) {
-        COORDINATE = coordinate;
+    public PointBlock(Point coordinate, Rectangle2D rectangle) {
+        this.coordinate = coordinate;
+        this.rectangle = rectangle;
         isOpened = false;
     }
 
@@ -32,9 +36,5 @@ public class PointBlock {
 
     public boolean hasHost() {
         return this.host != null;
-    }
-
-    public void draw(Graphics2D g2d, Integer h, Integer w){
-
     }
 }

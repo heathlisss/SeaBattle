@@ -2,6 +2,9 @@ package org.example.entity;
 
 import org.example.utils.Point;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
 public interface Immovable {
     /**
      * @return коордианты`
@@ -34,4 +37,5 @@ public interface Immovable {
      * @return координыты окружения`
      */
     public Point[] getCordsAround();
+
 }
