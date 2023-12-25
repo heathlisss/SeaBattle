@@ -2,22 +2,31 @@ package org.example.gamerules;
 
 import org.example.entity.Immovable;
 import org.example.entity.PointBlock;
+import org.example.gui.PlayerCountInputDialogWithSpinner;
+import org.example.gui.WindowForPlacingShips;
 import org.example.utils.Config;
 import org.example.utils.Point;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameMaker {
-    public final GameRules GAMERULES;
+    public final GameRules gameRules;
     private Player[] players;
-    public GameMaker(){
-        GAMERULES = new GameRules(makePlayers());
+
+    public GameMaker() {
+        gameRules = new GameRules(makePlayers());
     }
 
     private Player[] makePlayers() {
+        PlayerCountInputDialogWithSpinner.openPlayerCountDialog();
+
         players = new Player[Config.PLAYERS_COUNT];
-        for (int i = 0; i < players.length; i++) {
+        for (int numberPlayer = 0; numberPlayer < players.length; numberPlayer++) {
+            String playerName = WindowForPlacingShips.showShipLocationDialog(new JFrame(), numberPlayer + 1);
+
+
             Immovable[] entities = new Immovable[Config.ENTITY_COUNT];
             Map<Point, PointBlock> table = new HashMap<>();
             for (int x = Config.MIN_CORD; x <= Config.MAX_CORD; x++) {
@@ -27,7 +36,7 @@ public class GameMaker {
 //                    table.put(point, block);
                 }
             }
-            players[i] = new Player(table, entities);
+            players[numberPlayer] = new Player(table, entities, playerName);
         }
         return players;
     }

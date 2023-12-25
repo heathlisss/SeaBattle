@@ -29,4 +29,9 @@ public class ShipGraphics {
             g2d.drawImage(image, minX, minY, (int) (xArray.length * ship.getCords()[0].rectangle.getWidth()), (int) ship.getCords()[0].rectangle.getHeight(), null);
         }
     }
+    public static void drawAHit(Graphics2D g2d, PointBlock pointBlock) {
+        ImageIcon imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship1.png");
+        Image image = imageIcon.getImage();
+        g2d.drawImage(image, pointBlock.coordinate.X, pointBlock.coordinate.Y,(int) pointBlock.rectangle.getWidth(), (int) pointBlock.rectangle.getHeight()*2, null);
+    }
 }

@@ -23,8 +23,8 @@ public class DrawPanel extends JPanel {
     public DrawPanel(int startX, int startY, int width, int height) {
         PANEL_WIDTH = width;
         PANEL_HEIGHT = height;
-        START_X = startX + 30;
-        START_Y = startY + 30;
+        START_X = startX + 20;
+        START_Y = startY + 20;
         WIDTH_BLOCK = PANEL_WIDTH / (Config.MAX_CORD + 1);
         HEIGHT_BLOCK = WIDTH_BLOCK;
         setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
@@ -45,7 +45,6 @@ public class DrawPanel extends JPanel {
                                 WIDTH_BLOCK,
                                 HEIGHT_BLOCK));
                 PointBlockGraphics.drawACage((Graphics2D) g, pointBlock);
-                 ShipGraphics.draw((Graphics2D) g, new Ship(new PointBlock[]{pointBlock}));
             }
         }
     }

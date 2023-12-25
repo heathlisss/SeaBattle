@@ -20,7 +20,6 @@ public class MainWindow extends JFrame {
         //setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         JPanel panel = new JPanel(new GridLayout(1, Config.PLAYERS_COUNT));
         addComponentListener(new ComponentAdapter() {
             @Override
