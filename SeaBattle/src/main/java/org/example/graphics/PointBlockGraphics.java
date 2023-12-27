@@ -12,10 +12,11 @@ public class PointBlockGraphics {
      * рисование клетки`
      */
     public static void drawACell(Graphics2D g2d, PointBlock pointBlock) {
-        g2d.setColor(Config.Cell_COLOR);
-        g2d.draw(pointBlock.rectangle);
         g2d.setColor(Config.BACKGROUND_COLOR);
-        g2d.fill(pointBlock.rectangle);
+        g2d.fill(pointBlock.getRectangle());
+
+        g2d.setColor(Config.Cell_COLOR);
+        g2d.draw(pointBlock.getRectangle());
     }
 
     /**
@@ -26,6 +27,6 @@ public class PointBlockGraphics {
         Image image = imageIcon.getImage();
 
         g2d.drawImage(image, pointBlock.coordinate.x, pointBlock.coordinate.y,
-                (int) pointBlock.rectangle.getWidth(), (int) pointBlock.rectangle.getHeight(), null);
+                (int) pointBlock.getRectangle().getWidth(), (int) pointBlock.getRectangle().getHeight(), null);
     }
 }

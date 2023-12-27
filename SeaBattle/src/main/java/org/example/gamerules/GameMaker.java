@@ -32,9 +32,9 @@ public class GameMaker {
                     table[y][x] = block;
                 }
             }
-
-            String playerName = WindowForPlacingShips.showShipLocationDialog(new JFrame(), numberPlayer,  table );
+            System.out.println();
             Immovable[] entities = CreateArrayImmovable.locationDefault(table);
+            String playerName = WindowForPlacingShips.showShipLocationDialog(new JFrame(), numberPlayer,  table , entities);
 
             players[numberPlayer] = new Player(table, entities, playerName);
         }

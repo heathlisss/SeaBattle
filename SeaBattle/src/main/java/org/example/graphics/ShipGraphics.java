@@ -42,8 +42,8 @@ public class ShipGraphics implements Painter {
                 image,
                 minX,
                 minY,
-                (int) ((maxX - minX + 1) * ship.getCords()[0].rectangle.getWidth()),
-                (int) ((maxY - minY + 1) * ship.getCords()[0].rectangle.getHeight()),
+                (int) ((maxX - minX + 1) * ship.getCords()[0].getRectangle().getWidth()),
+                (int) ((maxY - minY + 1) * ship.getCords()[0].getRectangle().getHeight()),
                 null);
 
     }
@@ -56,7 +56,7 @@ public class ShipGraphics implements Painter {
         Image image = imageIcon.getImage();
 
         g2d.drawImage(image, pointBlock.coordinate.x, pointBlock.coordinate.y,
-                (int) pointBlock.rectangle.getWidth(), (int) pointBlock.rectangle.getHeight(), null);
+                (int) pointBlock.getRectangle().getWidth(), (int) pointBlock.getRectangle().getHeight(), null);
     }
 
 }

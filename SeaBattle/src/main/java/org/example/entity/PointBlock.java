@@ -8,13 +8,19 @@ import java.awt.geom.Rectangle2D;
 
 public class PointBlock {
     public final Point coordinate;
-    public  Rectangle2D rectangle;
+    private  Rectangle2D rectangle;
     private boolean isOpened;
     private Immovable host;
 
     public PointBlock(Point coordinate) {
         this.coordinate = coordinate;
         isOpened = false;
+    }
+    public Rectangle2D getRectangle(){
+        return rectangle;
+    }
+    public void setRectangle(Rectangle2D rectangle) {
+        this.rectangle = rectangle;
     }
 
     public boolean isOpened() {

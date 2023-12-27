@@ -16,7 +16,12 @@ import javax.swing.border.LineBorder;
 
 
 public class WindowForPlacingShips {
-    public static String showShipLocationDialog(JFrame parentFrame, int numberPlayer, PointBlock[][] table) {
+    public static String showShipLocationDialog(
+            JFrame parentFrame,
+            int numberPlayer,
+            PointBlock[][] table,
+            Immovable[] entities) {
+        
         JDialog dialog = new JDialog(parentFrame, "расстановка кораблей", true);
         dialog.setSize(600, 700);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -33,7 +38,6 @@ public class WindowForPlacingShips {
         inputPanel.add(playerNameField);
 
         JPanel drawingPanel = new DrawPanel(0, 0, dialog.getWidth(), table);
-        Immovable[] entities = CreateArrayImmovable.locationDefault(table);
         for (Immovable immovable : entities) {
             immovable.getPainter().draw((Graphics2D) drawingPanel.getGraphics());
         }

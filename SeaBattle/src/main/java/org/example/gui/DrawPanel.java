@@ -31,11 +31,12 @@ public class DrawPanel extends JPanel {
         super.paint(g);
         for (int colum = Config.MIN_CORD; colum < Config.MAX_CORD; colum++) {
             for (int row = Config.MIN_CORD; row < Config.MAX_CORD; row++) {
-                table[row][colum].rectangle = new Rectangle2D.Double(
+                table[row][colum].setRectangle(
+                        new Rectangle2D.Double(
                         startX + widthBlock * colum,
                         startY + widthBlock * row,
                         widthBlock,
-                        widthBlock);
+                        widthBlock));
                 PointBlockGraphics.drawACell((Graphics2D) g, table[row][colum]);
             }
         }
