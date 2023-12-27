@@ -24,15 +24,15 @@ public class ShipGraphics {
             minY = c;
         }
 
-        if (maxY - minY > maxX - minX) {
-            ImageIcon imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship1.png");
-            Image image = imageIcon.getImage();
-            g2d.drawImage(image, minX, minY, (int) ship.getCords()[0].rectangle.getWidth(), (int) (yArray.length * ship.getCords()[0].rectangle.getHeight()), null);
+        ImageIcon imageIcon;
+        if (maxX - minX == 0) {
+             imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship1.png");
         } else {
-            ImageIcon imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship2.jpg");
-            Image image = imageIcon.getImage();
-            g2d.drawImage(image, minX, minY, (int) (xArray.length * ship.getCords()[0].rectangle.getWidth()), (int) ship.getCords()[0].rectangle.getHeight(), null);
+             imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship2.jpg");
         }
+        Image image = imageIcon.getImage();
+        g2d.drawImage(image, minX, minY, (int) ((maxX - minX + 1) * ship.getCords()[0].rectangle.getWidth()), (int) ((maxY - minY + 1) * ship.getCords()[0].rectangle.getHeight()), null)
+        ;
     }
 
     /**
