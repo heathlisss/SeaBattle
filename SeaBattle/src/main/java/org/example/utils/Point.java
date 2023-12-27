@@ -3,12 +3,12 @@ package org.example.utils;
 import java.util.Objects;
 
 public class Point {
-    public final Integer X;
-    public final Integer Y;
+    public final Integer x;
+    public final Integer y;
 
     public Point(Integer x, Integer y) {
-        X = x;
-        Y = y;
+        this.x = x;
+        this.y = y;
     }
 
 
@@ -18,15 +18,15 @@ public class Point {
         if (o == null || getClass() != o.getClass()) return false;
 
         Point that = (Point) o;
-        if (!Objects.equals(X, that.X)) return false;
-        return Objects.equals(Y, that.Y);
+        if (!Objects.equals(x, that.x)) return false;
+        return Objects.equals(y, that.y);
     }
 
     @Override
     public int hashCode() {
         int code = 17;
-        code = 31 * code + X;
-        code = 31 * code + Y;
+        code = 31 * code + x;
+        code = 31 * code + y;
         return code;
     }
 

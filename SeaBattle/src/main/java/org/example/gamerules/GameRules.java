@@ -4,15 +4,15 @@ import org.example.utils.Config;
 
 public class GameRules {
     private int activePlayerIndex;
-    private final Player[] PLAYERS;
+    public final Player[] players;
 
     public GameRules(Player[] players) {
-        PLAYERS = players;
+        this.players = players;
         activePlayerIndex = 0;
     }
 
     public Player getActivePlayer() {
-        return PLAYERS[activePlayerIndex];
+        return players[activePlayerIndex];
     }
 
     public void nextPlayer() {
@@ -21,6 +21,6 @@ public class GameRules {
     }
 
     public Player getPlayer(int index) {
-        return PLAYERS[index];
+        return players[index];
     }
 }

@@ -12,7 +12,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
         GameMaker maker = new GameMaker();
-        MainWindow window = new MainWindow(/*maker.GAMERULES*/);
+        MainWindow window = new MainWindow(maker.gameRules);
         window.setVisible(true);
     }
 }

@@ -3,8 +3,6 @@ package org.example.entity;
 import org.example.utils.Config;
 import org.example.utils.Point;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,7 +26,7 @@ public class Ship implements Immovable {
 
     @Override
     public boolean canBeSurrounded() {
-        return false;
+         return false;
     }
 
     @Override
@@ -44,10 +42,10 @@ public class Ship implements Immovable {
     @Override
     public Point[] getCordsAround() {
         ArrayList<Point> points = new ArrayList<>();
-        int minX = BLOCKS[0].coordinate.X - 1;
-        int minY = BLOCKS[0].coordinate.Y - 1;
-        int maxX = BLOCKS[BLOCKS.length - 1].coordinate.X + 1;
-        int maxY = BLOCKS[BLOCKS.length - 1].coordinate.Y + 1;
+        int minX = BLOCKS[0].coordinate.x - 1;
+        int minY = BLOCKS[0].coordinate.y - 1;
+        int maxX = BLOCKS[BLOCKS.length - 1].coordinate.x + 1;
+        int maxY = BLOCKS[BLOCKS.length - 1].coordinate.y + 1;
 
         for (int xInd = minX; xInd < maxX; xInd++) {
             if (xInd >= Config.MIN_CORD && xInd <= Config.MAX_CORD) {

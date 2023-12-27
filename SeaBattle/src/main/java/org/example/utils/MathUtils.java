@@ -10,4 +10,5 @@ public class MathUtils {
     public static int max(int[] array) {
         return Arrays.stream(array).max().orElseThrow();
     }
+    public static
 }

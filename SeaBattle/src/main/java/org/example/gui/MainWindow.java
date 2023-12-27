@@ -1,7 +1,6 @@
 package org.example.gui;
 
 import org.example.gamerules.GameRules;
-import org.example.gamerules.Player;
 import org.example.utils.Config;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ public class MainWindow extends JFrame {
     private static final int WIDTH = 1400;
     private static final int HEIGHT = 800;
 
-    public MainWindow(/*GameRules gameRules*/) {
+    public MainWindow(GameRules gameRules) {
         setTitle("SeaBattle");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         //setSize(WIDTH, HEIGHT);
@@ -26,13 +25,17 @@ public class MainWindow extends JFrame {
             public void componentResized(ComponentEvent e) {
                 panel.removeAll();
                 for (int index = 0; index < Config.PLAYERS_COUNT; index++) {
-
+                    JLabel nameLabel = new JLabel(gameRules.players[index].getName());
+                    nameLabel.setForeground(new Color(0x9F9FA0));
+                    nameLabel.setFont(new Font("Arial ", Font.PLAIN, 17));
                     JPanel panelSeaDisplay = new DrawPanel(
                             0,
                             0,
                             (int) (getSize().width / Config.PLAYERS_COUNT),
-                            (int) (getSize().width / Config.PLAYERS_COUNT));
+                            (int) (getSize().width / Config.PLAYERS_COUNT), table);
+                    panelSeaDisplay.add(nameLabel);
                     panel.add(panelSeaDisplay);
+
                 }
                 panel.revalidate(); // Пересчитать макет после изменения компонентов
                 panel.repaint();
