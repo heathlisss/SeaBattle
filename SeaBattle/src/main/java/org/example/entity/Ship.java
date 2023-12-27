@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import org.example.graphics.Painter;
+import org.example.graphics.ShipGraphics;
 import org.example.utils.Config;
 import org.example.utils.Point;
 
@@ -9,8 +11,11 @@ import java.util.Arrays;
 public class Ship implements Immovable {
     private final PointBlock[] BLOCKS;
 
+    private Painter painter;
+
     public Ship(PointBlock[] coordinates) {
         BLOCKS = coordinates;
+        painter = new ShipGraphics(this);
     }
 
     @Override
@@ -26,7 +31,7 @@ public class Ship implements Immovable {
 
     @Override
     public boolean canBeSurrounded() {
-         return false;
+        return false;
     }
 
     @Override
@@ -59,5 +64,10 @@ public class Ship implements Immovable {
             }
         }
         return (Point[]) points.toArray();
+    }
+
+    @Override
+    public Painter getPainter() {
+        return painter;
     }
 }

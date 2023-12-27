@@ -6,7 +6,7 @@ import org.example.utils.Point;
 
 import java.util.Arrays;
 public class Player {
-    private final PointBlock[][] table;
+    public final PointBlock[][] table;
     public final Immovable[] entities;
     private final String name;
     //private PointBlock[][] matrix;

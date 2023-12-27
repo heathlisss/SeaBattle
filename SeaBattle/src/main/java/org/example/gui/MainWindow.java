@@ -31,8 +31,7 @@ public class MainWindow extends JFrame {
                     JPanel panelSeaDisplay = new DrawPanel(
                             0,
                             0,
-                            (int) (getSize().width / Config.PLAYERS_COUNT),
-                            (int) (getSize().width / Config.PLAYERS_COUNT), table);
+                            (int) (getSize().width / Config.PLAYERS_COUNT), gameRules.players[index].table);
                     panelSeaDisplay.add(nameLabel);
                     panel.add(panelSeaDisplay);
 

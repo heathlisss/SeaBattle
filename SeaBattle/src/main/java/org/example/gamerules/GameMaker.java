@@ -5,12 +5,10 @@ import org.example.entity.PointBlock;
 import org.example.gui.PlayerCountInputDialogWithSpinner;
 import org.example.gui.WindowForPlacingShips;
 import org.example.utils.Config;
-import org.example.utils.CreateArrayImmoveble;
+import org.example.utils.CreateArrayImmovable;
 import org.example.utils.Point;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GameMaker {
     public final GameRules gameRules;
@@ -34,8 +32,9 @@ public class GameMaker {
                     table[y][x] = block;
                 }
             }
-            Immovable[] entities = CreateArrayImmoveble.locationDefault(table);
-            String playerName = WindowForPlacingShips.showShipLocationDialog(new JFrame(), numberPlayer,entities, table );
+
+            String playerName = WindowForPlacingShips.showShipLocationDialog(new JFrame(), numberPlayer,  table );
+            Immovable[] entities = CreateArrayImmovable.locationDefault(table);
 
             players[numberPlayer] = new Player(table, entities, playerName);
         }

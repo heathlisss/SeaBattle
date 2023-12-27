@@ -2,10 +2,12 @@ package org.example.gui;
 
 import org.example.entity.Immovable;
 import org.example.entity.PointBlock;
+import org.example.entity.Ship;
 import org.example.gamerules.Player;
 import org.example.gamerules.GameMaker;
 import org.example.graphics.ShipGraphics;
 import org.example.utils.Config;
+import org.example.utils.CreateArrayImmovable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ import javax.swing.border.LineBorder;
 
 
 public class WindowForPlacingShips {
-    public static String showShipLocationDialog(JFrame parentFrame, int numberPlayer, Immovable[] entities, PointBlock[][] table) {
+    public static String showShipLocationDialog(JFrame parentFrame, int numberPlayer, PointBlock[][] table) {
         JDialog dialog = new JDialog(parentFrame, "расстановка кораблей", true);
         dialog.setSize(600, 700);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -30,9 +32,10 @@ public class WindowForPlacingShips {
         inputPanel.add(nameLabel);
         inputPanel.add(playerNameField);
 
-        JPanel drawingPanel = new DrawPanel(0, 0, dialog.getWidth(), dialog.getWidth(), table);
+        JPanel drawingPanel = new DrawPanel(0, 0, dialog.getWidth(), table);
+        Immovable[] entities = CreateArrayImmovable.locationDefault(table);
         for (Immovable immovable : entities) {
-            ShipGraphics.draw();
+            immovable.getPainter().draw((Graphics2D) drawingPanel.getGraphics());
         }
 
         dialog.add(inputPanel, BorderLayout.NORTH);

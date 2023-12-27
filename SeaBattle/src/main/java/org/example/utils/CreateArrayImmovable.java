@@ -4,9 +4,7 @@ import org.example.entity.Immovable;
 import org.example.entity.PointBlock;
 import org.example.entity.Ship;
 
-import java.util.Map;
-
-public class CreateArrayImmoveble {
+public class CreateArrayImmovable {
     public static Immovable[] locationDefault(PointBlock[][] table) {
         Immovable[] entities = new Immovable[Config.ENTITY_COUNT];
         entities[0] = new Ship(new PointBlock[]{table[0][0], table[1][0], table[2][0], table[3][0]});

@@ -8,8 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
-public class ShipGraphics {
-    public static void draw(Graphics2D g2d, Ship ship) {
+public class ShipGraphics implements Painter {
+    private Ship ship;
+
+    public ShipGraphics(Ship ship) {
+        this.ship = ship;
+    }
+    @Override
+    public void draw(Graphics2D g2d) {
         int maxX = ship.getCords()[0].coordinate.x;
         int maxY = ship.getCords()[0].coordinate.y;
         int minX = ship.getCords()[ship.getCords().length - 1].coordinate.x;
@@ -26,13 +32,20 @@ public class ShipGraphics {
 
         ImageIcon imageIcon;
         if (maxX - minX == 0) {
-             imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship1.png");
+            imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship1.png");
         } else {
-             imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship2.jpg");
+            imageIcon = new ImageIcon("C:\\Users\\Lizka\\git\\SeaBattle\\SeaBattle\\image\\ship2.jpg");
         }
         Image image = imageIcon.getImage();
-        g2d.drawImage(image, minX, minY, (int) ((maxX - minX + 1) * ship.getCords()[0].rectangle.getWidth()), (int) ((maxY - minY + 1) * ship.getCords()[0].rectangle.getHeight()), null)
-        ;
+
+        g2d.drawImage(
+                image,
+                minX,
+                minY,
+                (int) ((maxX - minX + 1) * ship.getCords()[0].rectangle.getWidth()),
+                (int) ((maxY - minY + 1) * ship.getCords()[0].rectangle.getHeight()),
+                null);
+
     }
 
     /**

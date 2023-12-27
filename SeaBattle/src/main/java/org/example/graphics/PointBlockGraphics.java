@@ -14,6 +14,8 @@ public class PointBlockGraphics {
     public static void drawACell(Graphics2D g2d, PointBlock pointBlock) {
         g2d.setColor(Config.Cell_COLOR);
         g2d.draw(pointBlock.rectangle);
+        g2d.setColor(Config.BACKGROUND_COLOR);
+        g2d.fill(pointBlock.rectangle);
     }
 
     /**

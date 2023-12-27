@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import org.example.graphics.Painter;
 import org.example.utils.Point;
 
 import java.awt.*;
@@ -37,5 +38,10 @@ public interface Immovable {
      * @return координыты окружения`
      */
     public Point[] getCordsAround();
+    /**
+     * Возвращает объект, отвечающий за рисование класса
+     * @return
+     */
+    public Painter getPainter();
 
 }
