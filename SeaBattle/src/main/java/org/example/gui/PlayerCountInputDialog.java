@@ -5,7 +5,7 @@ import org.example.utils.Config;
 import javax.swing.*;
 import java.awt.*;
 
-public class PlayerCountInputDialogWithSpinner {
+public class PlayerCountInputDialog {
     private static boolean resultRead = false;
 
     public static void openPlayerCountDialog() {
@@ -24,7 +24,12 @@ public class PlayerCountInputDialogWithSpinner {
         panel.add(new JLabel("Выберите количество игроков (2-8):"));
         panel.add(playerCountSpinner);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Выбор количества игроков", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                panel,
+                "Выбор количества игроков",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION) {
             Config.PLAYERS_COUNT = (int) playerCountSpinner.getValue();

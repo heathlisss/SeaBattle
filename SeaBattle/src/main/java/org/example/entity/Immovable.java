@@ -10,7 +10,7 @@ public interface Immovable {
     /**
      * @return коордианты`
      */
-    public PointBlock[] getCords();
+    public PointBlock[] getCoords();
 
     /**
      * <h3> действие </h3>
@@ -27,21 +27,27 @@ public interface Immovable {
     /**
      * проверяет наличие координаты
      */
-    public boolean hasCord(Point point);
+    public boolean hasCoord(Point point);
 
     /**
      * прверяет состояние
      */
     public boolean isOpened();
+    public void close();
 
     /**
      * @return координыты окружения`
      */
-    public Point[] getCordsAround();
+    public Point[] getCoordsAround();
     /**
      * Возвращает объект, отвечающий за рисование класса
      * @return
      */
     public Painter getPainter();
+    public int minX();
+    public int minY();
 
+    public int maxX();
+
+    public int maxY();
 }

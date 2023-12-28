@@ -4,39 +4,48 @@ import org.example.entity.Immovable;
 import org.example.entity.PointBlock;
 import org.example.utils.Point;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 public class Player {
-    public final PointBlock[][] table;
-    public final Immovable[] entities;
-    private final String name;
-    //private PointBlock[][] matrix;
-    public Player(PointBlock[][] table, Immovable[] entities, String name) {
+    public PointBlock[][] table;
+    public List<Immovable> entities = new ArrayList<>();
+    private String name;
+    public Player() {
+        //fillArray();
+    }
+    public Player(PointBlock[][] table, List<Immovable> entities, String name) {
         this.table = table;
         this.entities = entities;
         this.name = name;
-        //fillArray();
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
+
     public void action(Point point) {
-//        table.get(point).open();
-//        if (!table.get(point).hasHost()) {
-//            return;
-//        }
-//        Immovable entity = table.get(point).getHost();
-//        entity.action(point);
-//        if (entity.isOpened() && !entity.canBeSurrounded()) {
-//            getBlocks(entity.getCordsAround()).forEach(PointBlock::open);
-//        }
+        getBlock(point).open();
+        if (!getBlock(point).hasHost()) {
+            return;
+        }
+        Immovable entity = getBlock(point).getHost();
+        entity.action(point);
+        if (entity.isOpened() && !entity.canBeSurrounded()) {
+            getBlocks(entity.getCoordsAround()).forEach(PointBlock::open);
+        }
     }
 
-    public PointBlock[][] getBlocks(Point[] coordinates) {
-       return table;
+    public List<PointBlock> getBlocks(Point[] coordinates) {
+        List<PointBlock> blocks = new ArrayList<>();
+        for (Point point : coordinates) {
+            blocks.add(getBlock(point));
+        }
+        return blocks;
     }
-
     public boolean isLost() {
-        return Arrays.stream(entities).allMatch(Immovable::isOpened);
+        return entities.stream().allMatch(Immovable::isOpened);
     }
 
     public PointBlock getBlock(Point point) {
@@ -52,8 +61,28 @@ public class Player {
 //            }
 //        }
 //    }
-//
-//    public PointBlock[][] getMatrix() {
-//        return matrix;
-//    }
+
+    public PointBlock[][] getTable() {
+        return table;
+    }
+
+    public void setTable(PointBlock[][] table) {
+        this.table = table;
+    }
+
+    public List<Immovable> getEntities() {
+        return entities;
+    }
+
+    public void setEntities(List<Immovable> entities) {
+        this.entities = entities;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void addEntity(Immovable entity) {
+        entities.add(entity);
+    }
 }
