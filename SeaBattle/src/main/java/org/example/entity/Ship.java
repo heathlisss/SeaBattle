@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import org.example.gamerules.Player;
 import org.example.graphics.Painter;
 import org.example.graphics.ShipGraphics;
 import org.example.utils.Config;
@@ -27,7 +28,7 @@ public class Ship implements Immovable {
     }
 
     @Override
-    public void action(Point point) {
+    public void action(Point point, Player attacker) {
         Optional<PointBlock> localPoint = Arrays.stream(blocks)
                 .filter(pointBlock -> pointBlock.coordinate.equals(point))
                 .findFirst();

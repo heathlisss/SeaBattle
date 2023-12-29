@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import org.example.gamerules.Player;
 import org.example.graphics.Painter;
 import org.example.utils.Point;
 
@@ -16,7 +17,7 @@ public interface Immovable {
      *
      * @param point вводимая координата
      */
-    void action(Point point);
+    void action(Point point, Player attacker);
 
     /**
      * @return можно ли ставить рядом  оъекты

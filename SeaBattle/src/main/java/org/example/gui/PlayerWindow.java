@@ -158,6 +158,7 @@ public class PlayerWindow extends JFrame {
             Message.allShipsAdded(null);
             addShipButton.setVisible(false);
             okButton.setVisible(true);
+            display.requestFocus(false);
         } else {
             if (activeImmovable != null) {
                 if (!canChangeTheLocationOfTheShip(activeImmovable.getCoords())) {
@@ -187,6 +188,9 @@ public class PlayerWindow extends JFrame {
         entities.add(new Ship(new PointBlock[]{table[0][0]}));
         entities.add(new Ship(new PointBlock[]{table[0][0]}));
         entities.add(new Ship(new PointBlock[]{table[0][0]}));
+        entities.add(new Mine(new PointBlock[]{table[0][0]}));
+        entities.add(new Mine(new PointBlock[]{table[0][0]}));
+
     }
 
     private void moveRight() {

@@ -1,5 +1,6 @@
 package org.example.graphics;
 
+import org.example.entity.Mine;
 import org.example.entity.PointBlock;
 import org.example.entity.Ship;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class ShipGraphics implements Painter {
-    private Ship ship;
+    private final Ship ship;
 
     public ShipGraphics(Ship ship) {
         this.ship = ship;

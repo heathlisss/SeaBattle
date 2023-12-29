@@ -85,7 +85,7 @@ public class MainWindow extends JFrame {
                 if (gameRules.getActivePlayer() == drawPanel.getPlayer()) {
                     gameRules.nextTurn(point);
                     if (!gameRules.isStarted()) {
-                        gameRules = gameMaker.newGame();
+                       dispose();
                     }
                 }
             }

@@ -11,19 +11,21 @@ public class Player {
     private PointBlock[][] table;
     private List<Immovable> entities = new ArrayList<>();
     private String name;
-    public Player() {}
+
+    public Player() {
+    }
 
     public String getName() {
         return name;
     }
 
-    public void action(Point point) {
+    public void action(Point point, Player attacker) {
         getBlock(point).open();
         if (!getBlock(point).hasHost()) {
             return;
         }
         Immovable entity = getBlock(point).getHost();
-        entity.action(point);
+        entity.action(point, attacker);
         if (entity.isOpened() && !entity.canBeSurrounded()) {
             getBlocks(entity.getCoordsAround()).forEach(PointBlock::open);
         }
@@ -36,6 +38,7 @@ public class Player {
         }
         return blocks;
     }
+
     public boolean isLost() {
         return entities.stream().allMatch(Immovable::isOpened);
     }

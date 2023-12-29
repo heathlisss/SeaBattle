@@ -41,8 +41,10 @@ public class GameRules {
     public void nextTurn(Point point) {
         PointBlock block = getActivePlayer().getBlock(point);
         if (!block.isOpened()) {
-            getActivePlayer().action(point);
-            getActivePanel().repaint();
+            getActivePlayer().action(point, getAttacker());
+            for (DrawPanel panel : panels) {
+                panel.repaint();
+            }
             if (getActivePlayer().isLost()) {
                 Message.gameOver(getActivePlayer().getName());
                 isStarted = false;
@@ -60,5 +62,9 @@ public class GameRules {
 
     public DrawPanel getActivePanel() {
         return panels[activePlayerIndex];
+    }
+
+    public Player getAttacker() {
+        return getPlayer((activePlayerIndex + 1) % Config.PLAYERS_COUNT);
     }
 }
