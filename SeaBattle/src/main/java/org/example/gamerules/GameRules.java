@@ -7,8 +7,8 @@ import org.example.utils.Point;
 
 public class GameRules {
     private int activePlayerIndex; // тот, на кого нападают.
-    public final Player[] players;
-    public DrawPanel[] panels;
+    private final Player[] players;
+    private DrawPanel[] panels;
 
     public GameRules(Player[] players) {
         this.players = players;
@@ -22,6 +22,9 @@ public class GameRules {
     public void nextPlayer() {
         activePlayerIndex++;
         activePlayerIndex %= Config.PLAYERS_COUNT;
+        panels[(activePlayerIndex + 1) % Config.PLAYERS_COUNT].setActivePlayer(players[activePlayerIndex]);
+        panels[activePlayerIndex].setActivePlayer(players[activePlayerIndex]);
+        panels[activePlayerIndex].repaint();
     }
 
     public Player getPlayer(int index) {
@@ -30,16 +33,23 @@ public class GameRules {
 
     public void nextTurn(Point point) {
         PointBlock block = players[activePlayerIndex].getBlock(point);
-        players[activePlayerIndex].action(point);
-
-        //todo: проверить там закрытые открытые клетки чета сделать учи правила морского боя короче
-        if (!block.hasHost()) {
-            nextPlayer();
-
-            //todo: прочекать кончилаьс ли игра, вдруг кто-то проиграл.
-            return;
-        } else {
-
+        if (!players[activePlayerIndex].table[point.y][point.x].isOpened()) {
+            players[activePlayerIndex].action(point);
+            panels[activePlayerIndex].repaint();
+            if (!block.hasHost()) {
+                nextPlayer();
+                //todo: прочекать кончилаьс ли игра, вдруг кто-то проиграл.
+                return;
+            }
         }
     }
+
+    public void setActivePlayerIndex(int activePlayerIndex) {
+        this.activePlayerIndex = activePlayerIndex;
+    }
+
+    public void setPanels(DrawPanel[] panels) {
+        this.panels = panels;
+    }
+
 }

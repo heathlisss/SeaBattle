@@ -5,12 +5,14 @@ import org.example.utils.Point;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public interface Immovable {
     /**
      * @return коордианты`
      */
     public PointBlock[] getCoords();
+    public void setBlocks(PointBlock[] blocks);
 
     /**
      * <h3> действие </h3>
@@ -38,7 +40,7 @@ public interface Immovable {
     /**
      * @return координыты окружения`
      */
-    public Point[] getCoordsAround();
+    public ArrayList<Point> getCoordsAround();
     /**
      * Возвращает объект, отвечающий за рисование класса
      * @return

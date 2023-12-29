@@ -3,7 +3,6 @@ package org.example.gamerules;
 import org.example.entity.Immovable;
 import org.example.entity.PointBlock;
 import org.example.entity.Ship;
-import org.example.gui.PlayerCountInputDialog;
 import org.example.gui.PlayerWindow;
 import org.example.utils.Config;
 import org.example.utils.Point;
@@ -17,7 +16,7 @@ public class GameMaker {
     }
 
     private Player[] makePlayers() {
-        PlayerCountInputDialog.openPlayerCountDialog();
+        //PlayerCountInputDialog.openPlayerCountDialog();
 
         players = new Player[Config.PLAYERS_COUNT];
         for (int numberPlayer = 0; numberPlayer < players.length; numberPlayer++) {
@@ -33,9 +32,17 @@ public class GameMaker {
             Player player = new Player();
 
             player.setTable(table);
-            player.setName(String.valueOf("player "+numberPlayer));
+            player.setName(String.valueOf("player "+(numberPlayer+1)));
 
             PlayerWindow windowForPlacingShips = new PlayerWindow(player);
+            // Цикл проверки открытости JFrame
+            while (windowForPlacingShips.isVisible()) {
+                try {
+                    Thread.sleep(100); // Пауза для уменьшения нагрузки на процессор
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
            // String playerName = WindowForPlacingShips.showShipLocationDialog(new JFrame(), numberPlayer,  table , entities);
 
             players[numberPlayer] = player;
@@ -69,5 +76,6 @@ public class GameMaker {
 
         return entities;
     }
+
 }
 

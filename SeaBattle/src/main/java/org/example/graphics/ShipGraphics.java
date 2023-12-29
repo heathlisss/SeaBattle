@@ -17,6 +17,9 @@ public class ShipGraphics implements Painter {
     @Override
     public void draw(Graphics2D g2d) {
         if (!ship.isOpened()) {
+            for (PointBlock block : ship.getCoords()) {
+                drawAHit(g2d, block);
+            }
             return;
         }
         int maxX = ship.getCoords()[0].coordinate.x;
@@ -25,26 +28,24 @@ public class ShipGraphics implements Painter {
 
         ImageIcon imageIcon;
         if (maxX - minX == 0) {
-            imageIcon = new ImageIcon("image/ship1.png");
+            imageIcon = new ImageIcon("SeaBattle\\image\\ship1.png");
         } else {
-            imageIcon = new ImageIcon("image/ship2.png");
+            imageIcon = new ImageIcon("SeaBattle\\image\\ship2.png");
         }
         Image image = imageIcon.getImage();
 
-        g2d.setColor(new Color(92, 16, 97));
-        g2d.fill(bounds);
+
+        g2d.drawImage(
+                image,
+                (int) bounds.getX(),
+                (int) bounds.getY(),
+                (int) bounds.getWidth(),
+                (int) bounds.getHeight(),
+                null);
 
         for (PointBlock block : ship.getCoords()) {
             drawAHit(g2d, block);
         }
-
-//        g2d.drawImage(
-//                image,
-//                (int) bounds.getX(),
-//                (int) bounds.getY(),
-//                (int) bounds.getWidth(),
-//                (int) bounds.getHeight(),
-//                null);
     }
 
     /**
@@ -54,10 +55,10 @@ public class ShipGraphics implements Painter {
         if (!pointBlock.isOpened()) {
             return;
         }
-        ImageIcon imageIcon = new ImageIcon("image/X.png");
+        ImageIcon imageIcon = new ImageIcon("SeaBattle\\image\\X.png");
         Image image = imageIcon.getImage();
 
-        g2d.drawImage(image, pointBlock.coordinate.x, pointBlock.coordinate.y,
+        g2d.drawImage(image, (int) pointBlock.getRectangle().getX(), (int) pointBlock.getRectangle().getY(),
                 (int) pointBlock.getRectangle().getWidth(), (int) pointBlock.getRectangle().getHeight(), null);
     }
 

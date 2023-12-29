@@ -16,6 +16,7 @@ public class MainWindow extends JFrame {
     private static final int WIDTH = 1400;
     private static final int HEIGHT = 800;
     private GameRules gameRules;
+    private DrawPanel[] drawPanels;
 
     public MainWindow(GameRules gameRules) {
         setTitle("SeaBattle");
@@ -24,6 +25,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.gameRules = gameRules;
+        drawPanels = new DrawPanel[Config.PLAYERS_COUNT];
 
         JPanel panel = new JPanel(new GridLayout(1, Config.PLAYERS_COUNT));
         addComponentListener(new ComponentAdapter() {
@@ -31,25 +33,18 @@ public class MainWindow extends JFrame {
             public void componentResized(ComponentEvent e) {
                 panel.removeAll();
                 for (int index = 0; index < Config.PLAYERS_COUNT; index++) {
-                  /*JLabel nameLabel = new JLabel(gameRules.players[index].getName());
-                    nameLabel.setForeground(new Color(0x9F9FA0));
-                   nameLabel.setFont(new Font("Arial ", Font.PLAIN, 17));
-
-                    JPanel panelSeaDisplay = new DrawPanel(
-                           0,
-                           0,
-                            (int) (getSize().width / Config.PLAYERS_COUNT), gameRules.players[index].table);
-                    panelSeaDisplay.add(nameLabel);
-                    panel.add(panelSeaDisplay);
-                   */
                     DrawPanel panelSeaDisplay = getPanelSeaDisplay(index);
                     panelSeaDisplay.addMouseListener(new CustomMouseListener(panelSeaDisplay));
                     panel.add(panelSeaDisplay);
+                    drawPanels[index] = panelSeaDisplay;
+                    drawPanels[index].setActivePlayer(gameRules.getActivePlayer());
                 }
                 panel.revalidate(); // Пересчитать макет после изменения компонентов
                 panel.repaint();
             }
         });
+
+        gameRules.setPanels(drawPanels);
 
         add(panel);
         pack();
@@ -58,14 +53,14 @@ public class MainWindow extends JFrame {
     }
 
     private DrawPanel getPanelSeaDisplay(int index) {
-        JLabel nameLabel = new JLabel(gameRules.players[index].getName());
+        JLabel nameLabel = new JLabel(gameRules.getPlayer(index).getName());
         nameLabel.setForeground(new Color(0x9F9FA0));
         nameLabel.setFont(new Font("Arial ", Font.PLAIN, 17));
         DrawPanel panelSeaDisplay = new DrawPanel(
                 0,
                 0,
                 (getSize().width / Config.PLAYERS_COUNT),
-                gameRules.players[index]);
+                gameRules.getPlayer(index));
 
         panelSeaDisplay.add(nameLabel);
         return panelSeaDisplay;
@@ -93,8 +88,6 @@ public class MainWindow extends JFrame {
                 if (gameRules.getActivePlayer() == drawPanel.getPlayer()) {
                     gameRules.nextTurn(point);
                 }
-
-                System.out.println(column + " " + row);
             }
 
         }

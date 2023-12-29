@@ -2,6 +2,7 @@ package org.example.gui;
 
 import org.example.entity.*;
 import org.example.gamerules.Player;
+import org.example.gui.dropDownWindows.Message;
 import org.example.utils.Config;
 import org.example.utils.Point;
 
@@ -12,12 +13,14 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 public class PlayerWindow extends JFrame {
     private Player player;
-    private Stack<Immovable> entities;
+    private Queue<Immovable> entities;
 
     private Immovable activeImmovable;
     private JPanel display;
@@ -31,7 +34,7 @@ public class PlayerWindow extends JFrame {
         String name = player.getName();
 
         setSize(600, 700);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         inputPanel.setBackground(Config.BACKGROUND_COLOR);
@@ -43,6 +46,7 @@ public class PlayerWindow extends JFrame {
         playerNameField.setBorder(new LineBorder(new Color(0x202020)));
         playerNameField.setForeground(new Color(0xDEDEDE));
         playerNameField.setBackground(new Color(0x202020));
+
 
         playerNameField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -71,18 +75,29 @@ public class PlayerWindow extends JFrame {
 
         JButton okButton = new JButton("ОК");
         okButton.addActionListener(e -> this.close());
+        okButton.setVisible(false);
+        okButton.setBackground(Config.BACKGROUND_COLOR);
+        okButton.setForeground(new Color(0x9F9FA0));
+
+        JButton restart = new JButton("restart");
+        restart.addActionListener(e -> {
+            this.fillEntities();
+            display.repaint();
+        });
+        restart.setVisible(true);
+        restart.setBackground(Config.BACKGROUND_COLOR);
+        restart.setForeground(new Color(0x9F9FA0));
 
         JButton addShipButton = new JButton("Add ship");
-        addShipButton.addActionListener(e -> addShip());
+        addShipButton.addActionListener(e -> addShip(addShipButton, okButton));
+        addShipButton.setBackground(Config.BACKGROUND_COLOR);
+        addShipButton.setForeground(new Color(0x9F9FA0));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Config.BACKGROUND_COLOR);
-        okButton.setBackground(Config.BACKGROUND_COLOR);
-        okButton.setForeground(new Color(0x9F9FA0));
-        addShipButton.setBackground(Config.BACKGROUND_COLOR);
-        addShipButton.setForeground(new Color(0x9F9FA0));
         buttonPanel.add(okButton);
         buttonPanel.add(addShipButton);
+        buttonPanel.add(restart);
 
         add(buttonPanel, BorderLayout.SOUTH);
 
@@ -124,12 +139,14 @@ public class PlayerWindow extends JFrame {
         });
 
         setVisible(true);
+        setLocationRelativeTo(null);
+
     }
 
     private void close() {
-        if (!isStandsCorrectly()) {
-            // todo: вылезалка чтоб поправили корабли
-            // todo: проввериить шоб все корабли были добавлены
+        if (!canChangeTheLocationOfTheShip(activeImmovable.getCoords())) {
+            display.requestFocus(false);
+            return;
         }
         for (Immovable immovable : player.getEntities()) {
             immovable.close();
@@ -138,146 +155,118 @@ public class PlayerWindow extends JFrame {
                 block.setHost(immovable);
             }
         }
+
         dispose();
     }
 
-    private void addShip() {
-        if (entities.empty()) {
-            System.out.println("not shep");
+    private void addShip(JButton addShipButton, JButton okButton) {
+        if (entities.isEmpty()) {
+            Message.allShipsAdded(null);
+            addShipButton.setVisible(false);
+            okButton.setVisible(true);
         } else {
+            if (activeImmovable != null) {
+                if (!canChangeTheLocationOfTheShip(activeImmovable.getCoords())) {
+                    display.requestFocus(false);
+                    return;
+                }
+            }
             activeImmovable = entities.peek();
-            player.addEntity(entities.pop());
-            repaint();
+            player.addEntity(entities.poll());
 
             display.repaint();
             display.requestFocus(false);
         }
     }
 
+
     private void fillEntities() {
+        player.entities.clear();
         PointBlock[][] table = player.getTable();
-        entities = new Stack<>();
-        entities.push(new Ship(new PointBlock[]{table[0][0], table[1][0], table[2][0], table[3][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0], table[1][0], table[2][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0], table[1][0], table[2][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0], table[1][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0], table[1][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0], table[1][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0]}));
-        entities.push(new Ship(new PointBlock[]{table[0][0]}));
-    }
-
-    private boolean isStandsCorrectly() {
-        List<Immovable> ships = player.getEntities();
-
-        for (int index1 = 0; index1 < ships.size(); index1++) {
-            for (int index2 = 0; index2 < ships.size(); index2++) {
-                //if ()
-            }
-        }
-        return true;
+        entities = new LinkedList<>();
+        entities.add(new Ship(new PointBlock[]{table[0][0], table[1][0], table[2][0], table[3][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0], table[1][0], table[2][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0], table[1][0], table[2][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0], table[1][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0], table[1][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0], table[1][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0]}));
+        entities.add(new Ship(new PointBlock[]{table[0][0]}));
     }
 
     private void moveRight() {
         PointBlock[] blocks = activeImmovable.getCoords();
-        if (activeImmovable.maxX() < Config.MAX_CORD) {
+        if (activeImmovable.maxX() < Config.MAX_CORD - 1) {
             for (int i = 0; i < blocks.length; i++) {
                 blocks[i] = player.getBlock(new Point(blocks[i].coordinate.x + 1, blocks[i].coordinate.y));
             }
-            display.repaint();
         }
+        display.repaint();
     }
 
     private void moveLeft() {
         PointBlock[] blocks = activeImmovable.getCoords();
         if (activeImmovable.minX() > Config.MIN_CORD) {
             for (int i = 0; i < blocks.length; i++) {
-                blocks[i] = player.getBlock(new org.example.utils.Point(blocks[i].coordinate.x - 1, blocks[i].coordinate.y));
+                blocks[i] = player.getBlock(new Point(blocks[i].coordinate.x - 1, blocks[i].coordinate.y));
             }
-            display.repaint();
         }
+        display.repaint();
     }
 
     private void moveUp() {
         PointBlock[] blocks = activeImmovable.getCoords();
-        if (activeImmovable.maxY() > Config.MIN_CORD) {
+        if (activeImmovable.minY() > Config.MIN_CORD) {
             for (int i = 0; i < blocks.length; i++) {
-                blocks[i] = player.getBlock(new org.example.utils.Point(blocks[i].coordinate.x, blocks[i].coordinate.y - 1));
+                blocks[i] = player.getBlock(new Point(blocks[i].coordinate.x, blocks[i].coordinate.y - 1));
             }
-            display.repaint();
         }
+        display.repaint();
     }
 
     private void moveDown() {
         PointBlock[] blocks = activeImmovable.getCoords();
-        if (activeImmovable.maxY() < Config.MAX_CORD) {
+        if (activeImmovable.maxY() < Config.MAX_CORD - 1) {
             for (int i = 0; i < blocks.length; i++) {
                 blocks[i] = player.getBlock(new Point(blocks[i].coordinate.x, blocks[i].coordinate.y + 1));
             }
+        }
         display.repaint();
     }
-
-}
 
     private void rotate() {
-        //todo: сделать поворот
+        PointBlock[] blocks = activeImmovable.getCoords();
+        Point point = blocks[0].coordinate;
+        if (activeImmovable.maxY() + (activeImmovable.maxX() - activeImmovable.minX()) < Config.MAX_CORD
+                && activeImmovable.maxX() + (activeImmovable.maxY() - activeImmovable.minY()) < Config.MAX_CORD) {
+            for (int i = 0; i < blocks.length; i++) {
+                int y = blocks[i].coordinate.x - point.x;
+                int x = blocks[i].coordinate.y - point.y;
+                blocks[i] = player.getBlock(new Point(x + point.x, y + point.y));
+            }
+        }
         display.repaint();
     }
 
-
-//    public static String showShipLocationDialog(
-//            JFrame parentFrame,
-//            int numberPlayer,
-//            PointBlock[][] table,
-//            Immovable[] entities) {
-//
-//        JDialog dialog = new JDialog(parentFrame, "расстановка кораблей", true);
-//        dialog.setSize(600, 700);
-//        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//
-//        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//        inputPanel.setBackground(Config.BACKGROUND_COLOR);
-//
-//        JLabel nameLabel = new JLabel("Имя игрока:");
-//        nameLabel.setForeground(new Color(0x9F9FA0));
-//
-//        JTextField playerNameField = new JTextField("player " + (numberPlayer + 1), 20);
-//        playerNameField.setBorder(new LineBorder(new Color(0x202020)));
-//        playerNameField.setForeground(new Color(0xDEDEDE));
-//        playerNameField.setBackground(new Color(0x202020));
-//
-//        inputPanel.add(nameLabel);
-//        inputPanel.add(playerNameField);
-//
-//        JPanel drawingPanel = new DrawPanel(0, 0, dialog.getWidth(), pl);
-//        for (Immovable immovable : entities) {
-//            immovable.getPainter().draw((Graphics2D) drawingPanel.getGraphics());
-//        }
-//
-//        dialog.add(inputPanel, BorderLayout.NORTH);
-//        dialog.add(drawingPanel, BorderLayout.CENTER);
-//
-//        JButton okButton = new JButton("ОК");
-//        okButton.addActionListener(e -> dialog.dispose());
-//
-//        JPanel buttonPanel = new JPanel();
-//        buttonPanel.setBackground(Config.BACKGROUND_COLOR);
-//        okButton.setBackground(Config.BACKGROUND_COLOR);
-//        okButton.setForeground(new Color(0x9F9FA0));
-//        buttonPanel.add(okButton);
-//
-//        dialog.add(buttonPanel, BorderLayout.SOUTH);
-//
-//        dialog.setLocationRelativeTo(parentFrame);
-//        dialog.setVisible(true);
-//
-//        if (playerNameField.getText() != null) {
-//            return playerNameField.getText();
-//        } else {
-//            return "player " + numberPlayer;
-//        }
-//    }
-
+    private boolean canChangeTheLocationOfTheShip(PointBlock[] newCoordinate) {
+        for (Immovable entity : player.entities) {
+            if (entity != activeImmovable) {
+                for (PointBlock blockEntity : entity.getCoords()) {
+                    for (PointBlock block : newCoordinate) {
+                        if (block.coordinate == blockEntity.coordinate) return false;
+                    }
+                }
+                if (!(entity.canBeSurrounded() || activeImmovable.canBeSurrounded())) {
+                    for (PointBlock blockEntityAround : player.getBlocks(entity.getCoordsAround())) {
+                        for (PointBlock block : newCoordinate) {
+                            if (blockEntityAround.coordinate == block.coordinate) return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }

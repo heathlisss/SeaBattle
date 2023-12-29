@@ -15,7 +15,7 @@ public class DrawPanel extends JPanel {
     private final int startY;
     private final int widthBlock;
     private final Player player;
-
+    private Player activePlayer;
 
     public DrawPanel(int startX, int startY, int width, Player player) {
         panelWidth = width;
@@ -33,6 +33,11 @@ public class DrawPanel extends JPanel {
         super.paint(g);
         drawBlocks((Graphics2D) g);
         drawEntities((Graphics2D) g);
+        if (activePlayer == player) {
+            drawActivePlayer((Graphics2D) g);
+        } else {
+           drawNotActivePlayer ((Graphics2D) g);
+        }
     }
 
     private void setRectangles() {
@@ -67,6 +72,18 @@ public class DrawPanel extends JPanel {
             }
         }
     }
+
+    private void drawActivePlayer(Graphics2D g2d) {
+        g2d.setColor(new Color(206, 229, 147));
+        g2d.drawRect(startX - 1, startY - 1, widthBlock * (Config.MAX_CORD ) + 2, widthBlock * (Config.MAX_CORD ) + 2);
+    }
+
+    private void drawNotActivePlayer(Graphics2D g2d) {
+        g2d.setColor(Config.BACKGROUND_COLOR);
+        g2d.drawRect(startX - 1, startY - 1, widthBlock * (Config.MAX_CORD ) + 2, widthBlock * (Config.MAX_CORD ) + 2);
+
+    }
+
     public int getStartX() {
         return startX;
     }
@@ -81,5 +98,9 @@ public class DrawPanel extends JPanel {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void setActivePlayer(Player activePlayer) {
+        this.activePlayer = activePlayer;
     }
 }

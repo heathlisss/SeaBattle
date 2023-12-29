@@ -20,6 +20,10 @@ public class Ship implements Immovable {
         isOpen = true;
     }
 
+    public void setBlocks(PointBlock[] blocks) {
+        this.blocks = blocks;
+    }
+
     @Override
     public PointBlock[] getCoords() {
         return blocks;
@@ -30,7 +34,7 @@ public class Ship implements Immovable {
         Optional<PointBlock> localPoint = Arrays.stream(blocks)
                 .filter(pointBlock -> pointBlock.coordinate.equals(point))
                 .findFirst();
-        localPoint.ifPresent(PointBlock::open);
+        //localPoint.ifPresent(PointBlock::open);
         isOpen = Arrays.stream(blocks).allMatch(PointBlock::isOpened);
     }
 
@@ -55,16 +59,16 @@ public class Ship implements Immovable {
     }
 
     @Override
-    public Point[] getCoordsAround() {
+    public ArrayList<Point> getCoordsAround() {
         ArrayList<Point> points = new ArrayList<>();
-        int minX = blocks[0].coordinate.x - 1;
-        int minY = blocks[0].coordinate.y - 1;
-        int maxX = blocks[blocks.length - 1].coordinate.x + 1;
-        int maxY = blocks[blocks.length - 1].coordinate.y + 1;
+        int minX = minX();
+        int minY = minY();
+        int maxX = maxX();
+        int maxY = maxY();
 
-        for (int xInd = minX; xInd < maxX; xInd++) {
+        for (int xInd = minX - 1; xInd <= maxX + 1; xInd++) {
             if (xInd >= Config.MIN_CORD && xInd <= Config.MAX_CORD) {
-                for (int yInd = minY; yInd < maxY; yInd++) {
+                for (int yInd = minY - 1; yInd <= maxY + 1; yInd++) {
                     if (yInd >= Config.MIN_CORD && yInd <= Config.MAX_CORD) {
                         Point p = new Point(xInd, yInd);
                         if (!hasCoord(p))
@@ -73,7 +77,7 @@ public class Ship implements Immovable {
                 }
             }
         }
-        return (Point[]) points.toArray();
+        return points;
     }
 
     @Override
@@ -85,7 +89,7 @@ public class Ship implements Immovable {
     public int minX() {
         int minX = blocks[0].coordinate.x;
         for (PointBlock pointBlock : blocks) {
-            minX = Math.min(pointBlock.coordinate.x, pointBlock.coordinate.x);
+            minX = Math.min(minX, pointBlock.coordinate.x);
         }
         return minX;
     }
@@ -94,7 +98,7 @@ public class Ship implements Immovable {
     public int minY() {
         int minY = blocks[0].coordinate.y;
         for (PointBlock pointBlock : blocks) {
-            minY = Math.min(pointBlock.coordinate.y, pointBlock.coordinate.y);
+            minY = Math.min(minY, pointBlock.coordinate.y);
         }
         return minY;
     }
@@ -103,15 +107,17 @@ public class Ship implements Immovable {
     public int maxX() {
         int maxX = blocks[0].coordinate.x;
         for (PointBlock pointBlock : blocks) {
-            maxX = Math.max(pointBlock.coordinate.x, pointBlock.coordinate.x);
+            maxX = Math.max(maxX, pointBlock.coordinate.x);
         }
-        return maxX;    }
+        return maxX;
+    }
 
     @Override
     public int maxY() {
         int maxY = blocks[0].coordinate.y;
         for (PointBlock pointBlock : blocks) {
-            maxY = Math.max(pointBlock.coordinate.y, pointBlock.coordinate.y);
+            maxY = Math.max(maxY, pointBlock.coordinate.y);
         }
-        return maxY;    }
+        return maxY;
+    }
 }

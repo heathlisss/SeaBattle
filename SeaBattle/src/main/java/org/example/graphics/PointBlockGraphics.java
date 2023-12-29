@@ -26,17 +26,11 @@ public class PointBlockGraphics {
         if (!pointBlock.isOpened()) {
             return;
         }
-        ImageIcon imageIcon = new ImageIcon("image/hatching.png");
+        ImageIcon imageIcon = new ImageIcon("SeaBattle\\image\\hatching.png");
         Image image = imageIcon.getImage();
 
-//        g2d.setColor(Config.BACKGROUND_COLOR);
-//        g2d.fill(pointBlock.getRectangle());
-//
-//        g2d.setColor(Config.Cell_COLOR);
-//        g2d.draw(pointBlock.getRectangle());
 
-
-        g2d.drawImage(image, pointBlock.coordinate.x, pointBlock.coordinate.y,
+        g2d.drawImage(image, (int) pointBlock.getRectangle().getX(), (int) pointBlock.getRectangle().getY(),
                 (int) pointBlock.getRectangle().getWidth(), (int) pointBlock.getRectangle().getHeight(), null);
     }
 }

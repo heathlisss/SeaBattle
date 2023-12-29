@@ -37,7 +37,7 @@ public class Player {
         }
     }
 
-    public List<PointBlock> getBlocks(Point[] coordinates) {
+    public List<PointBlock> getBlocks(ArrayList<Point> coordinates) {
         List<PointBlock> blocks = new ArrayList<>();
         for (Point point : coordinates) {
             blocks.add(getBlock(point));

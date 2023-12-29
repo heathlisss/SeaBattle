@@ -1,4 +1,4 @@
-package org.example.gui;
+package org.example.gui.dropDownWindows;
 
 import org.example.utils.Config;
 
