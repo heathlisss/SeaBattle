@@ -1,9 +1,7 @@
 package org.example.entity;
 
-import org.example.utils.Config;
 import org.example.utils.Point;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class PointBlock {

@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class Ship implements Immovable {
-    private PointBlock[] blocks;
-    private Painter painter;
+    private final PointBlock[] blocks;
+    private final Painter painter;
     private boolean isOpen;
 
     public Ship(PointBlock[] coordinates) {
@@ -20,9 +20,6 @@ public class Ship implements Immovable {
         isOpen = true;
     }
 
-    public void setBlocks(PointBlock[] blocks) {
-        this.blocks = blocks;
-    }
 
     @Override
     public PointBlock[] getCoords() {

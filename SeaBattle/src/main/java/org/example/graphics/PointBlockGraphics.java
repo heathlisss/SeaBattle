@@ -5,8 +5,6 @@ import org.example.utils.Config;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-
 public class PointBlockGraphics {
     /**
      * рисование клетки`
@@ -30,7 +28,12 @@ public class PointBlockGraphics {
         Image image = imageIcon.getImage();
 
 
-        g2d.drawImage(image, (int) pointBlock.getRectangle().getX(), (int) pointBlock.getRectangle().getY(),
-                (int) pointBlock.getRectangle().getWidth(), (int) pointBlock.getRectangle().getHeight(), null);
+        g2d.drawImage(
+                image,
+                (int) pointBlock.getRectangle().getX(),
+                (int) pointBlock.getRectangle().getY(),
+                (int) pointBlock.getRectangle().getWidth(),
+                (int) pointBlock.getRectangle().getHeight(),
+                null);
     }
 }

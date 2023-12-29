@@ -1,5 +1,6 @@
 package org.example.gui;
 
+import org.example.gamerules.GameMaker;
 import org.example.gamerules.GameRules;
 import org.example.utils.Config;
 import org.example.utils.Point;
@@ -12,19 +13,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MainWindow extends JFrame {
-
-    private static final int WIDTH = 1400;
-    private static final int HEIGHT = 800;
     private GameRules gameRules;
     private DrawPanel[] drawPanels;
+    private final GameMaker gameMaker = new GameMaker();
 
-    public MainWindow(GameRules gameRules) {
+    public MainWindow() {
+        gameRules = gameMaker.newGame();
         setTitle("SeaBattle");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.gameRules = gameRules;
         drawPanels = new DrawPanel[Config.PLAYERS_COUNT];
 
         JPanel panel = new JPanel(new GridLayout(1, Config.PLAYERS_COUNT));
@@ -39,7 +37,7 @@ public class MainWindow extends JFrame {
                     drawPanels[index] = panelSeaDisplay;
                     drawPanels[index].setActivePlayer(gameRules.getActivePlayer());
                 }
-                panel.revalidate(); // Пересчитать макет после изменения компонентов
+                panel.revalidate();
                 panel.repaint();
             }
         });
@@ -75,7 +73,6 @@ public class MainWindow extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            // Получите координаты мыши относительно DrawPanel
             int x = e.getX();
             int y = e.getY();
 
@@ -87,10 +84,11 @@ public class MainWindow extends JFrame {
                 Point point = new Point(column, row);
                 if (gameRules.getActivePlayer() == drawPanel.getPlayer()) {
                     gameRules.nextTurn(point);
+                    if (!gameRules.isStarted()) {
+                        gameRules = gameMaker.newGame();
+                    }
                 }
             }
-
         }
     }
-
 }

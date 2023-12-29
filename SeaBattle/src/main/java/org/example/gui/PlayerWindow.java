@@ -14,14 +14,10 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
-
 public class PlayerWindow extends JFrame {
     private Player player;
     private Queue<Immovable> entities;
-
     private Immovable activeImmovable;
     private JPanel display;
 
@@ -46,7 +42,6 @@ public class PlayerWindow extends JFrame {
         playerNameField.setBorder(new LineBorder(new Color(0x202020)));
         playerNameField.setForeground(new Color(0xDEDEDE));
         playerNameField.setBackground(new Color(0x202020));
-
 
         playerNameField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -140,7 +135,6 @@ public class PlayerWindow extends JFrame {
 
         setVisible(true);
         setLocationRelativeTo(null);
-
     }
 
     private void close() {
@@ -160,7 +154,7 @@ public class PlayerWindow extends JFrame {
     }
 
     private void addShip(JButton addShipButton, JButton okButton) {
-        if (entities.isEmpty()) {
+        if (Config.ENTITY_COUNT == player.getEntities().size()) {
             Message.allShipsAdded(null);
             addShipButton.setVisible(false);
             okButton.setVisible(true);
@@ -179,9 +173,8 @@ public class PlayerWindow extends JFrame {
         }
     }
 
-
     private void fillEntities() {
-        player.entities.clear();
+        player.getEntities().clear();
         PointBlock[][] table = player.getTable();
         entities = new LinkedList<>();
         entities.add(new Ship(new PointBlock[]{table[0][0], table[1][0], table[2][0], table[3][0]}));
@@ -251,7 +244,7 @@ public class PlayerWindow extends JFrame {
     }
 
     private boolean canChangeTheLocationOfTheShip(PointBlock[] newCoordinate) {
-        for (Immovable entity : player.entities) {
+        for (Immovable entity : player.getEntities()) {
             if (entity != activeImmovable) {
                 for (PointBlock blockEntity : entity.getCoords()) {
                     for (PointBlock block : newCoordinate) {

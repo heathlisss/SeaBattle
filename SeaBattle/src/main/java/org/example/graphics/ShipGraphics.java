@@ -58,8 +58,13 @@ public class ShipGraphics implements Painter {
         ImageIcon imageIcon = new ImageIcon("SeaBattle\\image\\X.png");
         Image image = imageIcon.getImage();
 
-        g2d.drawImage(image, (int) pointBlock.getRectangle().getX(), (int) pointBlock.getRectangle().getY(),
-                (int) pointBlock.getRectangle().getWidth(), (int) pointBlock.getRectangle().getHeight(), null);
+        g2d.drawImage(
+                image,
+                (int) pointBlock.getRectangle().getX(),
+                (int) pointBlock.getRectangle().getY(),
+                (int) pointBlock.getRectangle().getWidth(),
+                (int) pointBlock.getRectangle().getHeight(),
+                null);
     }
 
     /**

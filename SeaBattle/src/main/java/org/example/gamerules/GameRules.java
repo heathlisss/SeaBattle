@@ -2,6 +2,7 @@ package org.example.gamerules;
 
 import org.example.entity.PointBlock;
 import org.example.gui.DrawPanel;
+import org.example.gui.dropDownWindows.Message;
 import org.example.utils.Config;
 import org.example.utils.Point;
 
@@ -9,10 +10,16 @@ public class GameRules {
     private int activePlayerIndex; // тот, на кого нападают.
     private final Player[] players;
     private DrawPanel[] panels;
+    private boolean isStarted;
 
     public GameRules(Player[] players) {
         this.players = players;
         activePlayerIndex = 0;
+        isStarted = true;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
     }
 
     public Player getActivePlayer() {
@@ -32,24 +39,26 @@ public class GameRules {
     }
 
     public void nextTurn(Point point) {
-        PointBlock block = players[activePlayerIndex].getBlock(point);
-        if (!players[activePlayerIndex].table[point.y][point.x].isOpened()) {
-            players[activePlayerIndex].action(point);
-            panels[activePlayerIndex].repaint();
+        PointBlock block = getActivePlayer().getBlock(point);
+        if (!block.isOpened()) {
+            getActivePlayer().action(point);
+            getActivePanel().repaint();
+            if (getActivePlayer().isLost()) {
+                Message.gameOver(getActivePlayer().getName());
+                isStarted = false;
+            }
             if (!block.hasHost()) {
                 nextPlayer();
-                //todo: прочекать кончилаьс ли игра, вдруг кто-то проиграл.
                 return;
             }
         }
-    }
-
-    public void setActivePlayerIndex(int activePlayerIndex) {
-        this.activePlayerIndex = activePlayerIndex;
     }
 
     public void setPanels(DrawPanel[] panels) {
         this.panels = panels;
     }
 
+    public DrawPanel getActivePanel() {
+        return panels[activePlayerIndex];
+    }
 }

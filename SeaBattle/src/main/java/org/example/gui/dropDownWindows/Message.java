@@ -10,4 +10,10 @@ public class Message {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static void gameOver(String name) {
+        JOptionPane.showMessageDialog(null,
+                name + " проиграл",
+                "Конец игры",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
 }
