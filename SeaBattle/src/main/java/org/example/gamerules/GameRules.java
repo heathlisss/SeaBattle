@@ -9,13 +9,16 @@ import org.example.utils.Point;
 public class GameRules {
     private int activePlayerIndex; // тот, на кого нападают.
     private final Player[] players;
-    private DrawPanel[] panels;
     private boolean isStarted;
 
     public GameRules(Player[] players) {
         this.players = players;
         activePlayerIndex = 0;
         isStarted = true;
+    }
+
+    public int getActivePlayerIndex() {
+        return activePlayerIndex;
     }
 
     public boolean isStarted() {
@@ -29,9 +32,6 @@ public class GameRules {
     public void nextPlayer() {
         activePlayerIndex++;
         activePlayerIndex %= Config.PLAYERS_COUNT;
-        panels[(activePlayerIndex + 1) % Config.PLAYERS_COUNT].setActivePlayer(players[activePlayerIndex]);
-        panels[activePlayerIndex].setActivePlayer(players[activePlayerIndex]);
-        panels[activePlayerIndex].repaint();
     }
 
     public Player getPlayer(int index) {
@@ -42,9 +42,7 @@ public class GameRules {
         PointBlock block = getActivePlayer().getBlock(point);
         if (!block.isOpened()) {
             getActivePlayer().action(point, getAttacker());
-            for (DrawPanel panel : panels) {
-                panel.repaint();
-            }
+
             if (getActivePlayer().isLost()) {
                 Message.gameOver(getActivePlayer().getName());
                 isStarted = false;
@@ -56,13 +54,6 @@ public class GameRules {
         }
     }
 
-    public void setPanels(DrawPanel[] panels) {
-        this.panels = panels;
-    }
-
-    public DrawPanel getActivePanel() {
-        return panels[activePlayerIndex];
-    }
 
     public Player getAttacker() {
         return getPlayer((activePlayerIndex + 1) % Config.PLAYERS_COUNT);

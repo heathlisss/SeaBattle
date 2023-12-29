@@ -42,7 +42,7 @@ public class MainWindow extends JFrame {
             }
         });
 
-        gameRules.setPanels(drawPanels);
+
 
         add(panel);
         pack();
@@ -84,11 +84,19 @@ public class MainWindow extends JFrame {
                 Point point = new Point(column, row);
                 if (gameRules.getActivePlayer() == drawPanel.getPlayer()) {
                     gameRules.nextTurn(point);
+                    changeActivePlayerinDrawPanel();
+                    repaint();
                     if (!gameRules.isStarted()) {
                        dispose();
                     }
                 }
             }
+        }
+    }
+
+    private void changeActivePlayerinDrawPanel(){
+        for(DrawPanel panel : drawPanels){
+            panel.setActivePlayer(gameRules.getActivePlayer());
         }
     }
 }

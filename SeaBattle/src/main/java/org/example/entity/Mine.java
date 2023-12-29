@@ -30,6 +30,9 @@ public class Mine implements Immovable {
     @Override
     public void action(Point point, Player attacker) {
         isVisible = true;
+        if (hasCoord(point)) {
+            blocks[0].open();
+        }
         attacker.action(point, attacker);
     }
 

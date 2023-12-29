@@ -138,7 +138,8 @@ public class PlayerWindow extends JFrame {
     }
 
     private void close() {
-        if (!canChangeTheLocationOfTheShip(activeImmovable.getCoords())) {
+        if (!isStandingCorrectly(activeImmovable.getCoords())) {
+            Message.shipMisplaced(this);
             display.requestFocus(false);
             return;
         }
@@ -155,13 +156,14 @@ public class PlayerWindow extends JFrame {
 
     private void addShip(JButton addShipButton, JButton okButton) {
         if (Config.ENTITY_COUNT == player.getEntities().size()) {
-            Message.allShipsAdded(null);
+            Message.allShipsAdded(this);
             addShipButton.setVisible(false);
             okButton.setVisible(true);
             display.requestFocus(false);
         } else {
             if (activeImmovable != null) {
-                if (!canChangeTheLocationOfTheShip(activeImmovable.getCoords())) {
+                if (!isStandingCorrectly(activeImmovable.getCoords())) {
+                    Message.shipMisplaced(this);
                     display.requestFocus(false);
                     return;
                 }
@@ -247,7 +249,7 @@ public class PlayerWindow extends JFrame {
         display.repaint();
     }
 
-    private boolean canChangeTheLocationOfTheShip(PointBlock[] newCoordinate) {
+    private boolean isStandingCorrectly(PointBlock[] newCoordinate) {
         for (Immovable entity : player.getEntities()) {
             if (entity != activeImmovable) {
                 for (PointBlock blockEntity : entity.getCoords()) {
@@ -265,5 +267,9 @@ public class PlayerWindow extends JFrame {
             }
         }
         return true;
+    }
+
+    public void setActiveImmovable(Immovable activeImmovable) {
+        this.activeImmovable = activeImmovable;
     }
 }

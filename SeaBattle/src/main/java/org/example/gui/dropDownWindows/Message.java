@@ -10,6 +10,13 @@ public class Message {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static void shipMisplaced(JFrame parentFrame) {
+        JOptionPane.showMessageDialog(parentFrame,
+                "Измените расстановку кораблей",
+                " ",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public static void gameOver(String name) {
         JOptionPane.showMessageDialog(null,
                 name + " проиграл",

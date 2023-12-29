@@ -12,7 +12,8 @@ public class Player {
     private List<Immovable> entities = new ArrayList<>();
     private String name;
 
-    public Player() {}
+    public Player() {
+    }
 
     public Player(PointBlock[][] table, List<Immovable> entities) {
         this.table = table;
@@ -24,6 +25,9 @@ public class Player {
     }
 
     public void action(Point point, Player attacker) {
+        if (getBlock(point).isOpened()) {
+            return;
+        }
         getBlock(point).open();
         if (!getBlock(point).hasHost()) {
             return;
