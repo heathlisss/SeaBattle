@@ -12,7 +12,11 @@ public class Player {
     private List<Immovable> entities = new ArrayList<>();
     private String name;
 
-    public Player() {
+    public Player() {}
+
+    public Player(PointBlock[][] table, List<Immovable> entities) {
+        this.table = table;
+        this.entities = entities;
     }
 
     public String getName() {

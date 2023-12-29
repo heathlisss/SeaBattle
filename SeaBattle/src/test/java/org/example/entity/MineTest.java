@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import org.example.utils.Point;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,43 +9,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class MineTest {
 
     @Test
-    void isVisible() {
+    void testCoordinate() {
+        Mine mine1 = new Mine(new PointBlock[]{
+                new PointBlock(new Point(0, 0))
+        });
+        assertEquals(0, mine1.maxX());
+        assertEquals(0, mine1.maxY());
+        assertEquals(0, mine1.minX());
+        assertEquals(0, mine1.minY());
 
-    }
-
-    @Test
-    void getCoords() {
-    }
-
-    @Test
-    void action() {
-    }
-
-    @Test
-    void canBeSurrounded() {
-    }
-
-    @Test
-    void hasCoord() {
-    }
-
-    @Test
-    void isOpened() {
-    }
-
-    @Test
-    void close() {
-    }
-
-    @Test
-    void getCoordsAround() {
-    }
-
-    @Test
-    void getPainter() {
-    }
-
-    @Test
-    void minX() {
+        assertFalse(mine1.hasCoord(new Point(0,1)));
+        assertTrue(mine1.hasCoord(new Point(0,0)));
     }
 }
